@@ -29,8 +29,9 @@ namespace MutantRecruiter.Services.Services
         {
             if (IsValidDNA(human.DNA))
             {
-                _dnaChain = separateChain(human.DNA);
-                return ValidateDNA();
+                _dnaChain = SeparateChain(human.DNA);
+                human.IsMutant = ValidateDNAMutant();
+                return human.IsMutant;
             }
             else
                 throw new Exception();
@@ -62,7 +63,7 @@ namespace MutantRecruiter.Services.Services
         /// </summary>
         /// <param name="dna"></param>
         /// <returns>DNA chain in the matrix</returns>
-        private string[,] separateChain(string[] dna)
+        private string[,] SeparateChain(string[] dna)
         {
             string[,] dnaChain = new string[dna.Length, dna.Length];
             for (int i = 0; i < dna.Length; i++)
@@ -81,7 +82,7 @@ namespace MutantRecruiter.Services.Services
         /// Method to evaluate the DNA chain
         /// </summary>
         /// <returns>True: Is mutant, False: Not mutant</returns>
-        private bool ValidateDNA()
+        private bool ValidateDNAMutant()
         {
             int countChain = 0;
             int n = _dnaChain.GetLength(0); // Size matrix's rows and columns;
