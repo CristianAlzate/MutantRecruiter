@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutantRecruiter.Web", "MutantRecruiter\MutantRecruiter.Web.csproj", "{9E95F4F9-0D5C-45A2-BF01-0D0DDC92FFC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutantRecruiter.Services", "MutantRecruiter.Services\MutantRecruiter.Services.csproj", "{B3870A98-FA45-4A1C-858C-782F4BE7965A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E95F4F9-0D5C-45A2-BF01-0D0DDC92FFC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E95F4F9-0D5C-45A2-BF01-0D0DDC92FFC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E95F4F9-0D5C-45A2-BF01-0D0DDC92FFC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E95F4F9-0D5C-45A2-BF01-0D0DDC92FFC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3870A98-FA45-4A1C-858C-782F4BE7965A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3870A98-FA45-4A1C-858C-782F4BE7965A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3870A98-FA45-4A1C-858C-782F4BE7965A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3870A98-FA45-4A1C-858C-782F4BE7965A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBCDB6E0-BDDA-44C4-9A37-745D33EFB061}
+	EndGlobalSection
+EndGlobal
