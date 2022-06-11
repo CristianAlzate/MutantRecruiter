@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MutantRecruiter.Services.Contract;
 using MutantRecruiter.Services.Services;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace MutantRecruiter
         {
             services.AddControllers();
             services.AddSingleton<IMutantService, MutantService>();
+            services.AddSingleton<IQueueService<Human>>(new QueueService<Human>(Configuration.GetValue<string>("QueueConnectionString")
+                                                        , Configuration.GetValue<string>("QueueName")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MutantRecruiter.Web", Version = "v1" });

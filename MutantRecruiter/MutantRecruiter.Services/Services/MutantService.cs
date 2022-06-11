@@ -13,10 +13,12 @@ namespace MutantRecruiter.Services.Services
     public class MutantService : IMutantService
     {
         private readonly IConfiguration _config;
+        private readonly IQueueService<Human> _queueService;
         private string[,] _dnaChain;
-        public MutantService(IConfiguration config)
+        public MutantService(IConfiguration config, IQueueService<Human> queueService)
         {
             _config = config;
+            _queueService = queueService;
         }
 
         /// <summary>
@@ -25,12 +27,13 @@ namespace MutantRecruiter.Services.Services
         /// <param name="human"></param>
         /// <returns>True: Is mutant, False: Not mutant</returns>
 
-        public async Task<bool> IsMutant(HumanInfo human)
+        public async Task<bool> IsMutant(Human human)
         {
             if (IsValidDNA(human.DNA))
             {
                 _dnaChain = SeparateChain(human.DNA);
-                human.IsMutant = ValidateDNAMutant();
+                human.IsMutant = await ValidateDNAMutant();
+                SaveHumanInfo(human);
                 return human.IsMutant;
             }
             else
@@ -82,7 +85,7 @@ namespace MutantRecruiter.Services.Services
         /// Method to evaluate the DNA chain
         /// </summary>
         /// <returns>True: Is mutant, False: Not mutant</returns>
-        private bool ValidateDNAMutant()
+        private async Task<bool> ValidateDNAMutant()
         {
             int countChain = 0;
             int n = _dnaChain.GetLength(0); // Size matrix's rows and columns;
@@ -91,11 +94,11 @@ namespace MutantRecruiter.Services.Services
                 for (int j = 0; j < n; j++)
                 {
                     if (i < n - 3)
-                        countChain = countChain + validateMutantChain(i, j, 1, 0, 0, _dnaChain[i, j]); //Vertical
+                        countChain = countChain + await validateMutantChain(i, j, 1, 0, 0, _dnaChain[i, j]); //Vertical
                     if (j < n - 3)
-                        countChain = countChain + validateMutantChain(i, j, 0, 1, 0, _dnaChain[i, j]); // Horizontal
+                        countChain = countChain + await validateMutantChain(i, j, 0, 1, 0, _dnaChain[i, j]); // Horizontal
                     if (j < n - 3 && i < n - 3)
-                        countChain = countChain + validateMutantChain(i, j, 1, 1, 0, _dnaChain[i, j]); // Diagonal
+                        countChain = countChain + await validateMutantChain(i, j, 1, 1, 0, _dnaChain[i, j]); // Diagonal
                 }
                 if (countChain > 1)
                     return true;
@@ -114,7 +117,7 @@ namespace MutantRecruiter.Services.Services
         /// <param name="quantity">quantity of equal letters</param>
         /// <param name="letter">letter to evaluate</param>
         /// <returns></returns>
-        private int validateMutantChain(int rowInit, int columnInit, int rowMove, int columnMove, int quantity, string letter)
+        private async Task<int> validateMutantChain(int rowInit, int columnInit, int rowMove, int columnMove, int quantity, string letter)
         {
             if (_dnaChain[rowInit + rowMove, columnInit + columnMove] == letter)
             {
@@ -122,9 +125,14 @@ namespace MutantRecruiter.Services.Services
                 if (quantity == 3)
                     return 1;
                 else
-                    return validateMutantChain(rowInit + rowMove, columnInit + columnMove, rowMove, columnMove, quantity, letter);
+                    return await validateMutantChain(rowInit + rowMove, columnInit + columnMove, rowMove, columnMove, quantity, letter);
             }
             return 0;
+        }
+
+        private async void SaveHumanInfo(Human human)
+        {
+            _queueService.QueueStack(human);
         }
     }
 }

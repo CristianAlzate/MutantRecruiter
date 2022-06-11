@@ -27,17 +27,17 @@ namespace MutantRecruiter.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> IsMutant(HumanInfo human)
+        public async Task<IActionResult> IsMutant(Human human)
         {
             try
             {
                 if (await _service.IsMutant(human))
-                    return Ok("Es mutante");
-                return StatusCode(403,"No es mutante");
+                    return Ok("Is mutant");
+                return StatusCode(403,"Is not a mutant");
             }
             catch
             {
-                return BadRequest("he's not a human, he's a monster");
+                return BadRequest("he's not a human, he's a alien");
             }
         }
     }

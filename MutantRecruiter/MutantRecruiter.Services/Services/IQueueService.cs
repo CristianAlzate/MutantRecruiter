@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MutantRecruiter.Services.Services
 {
-    public interface IMutantService
+    public interface IQueueService<T> where T : class
     {
-        Task<bool> IsMutant(Human human);
+        void QueueStack(T messageObject);
     }
 }

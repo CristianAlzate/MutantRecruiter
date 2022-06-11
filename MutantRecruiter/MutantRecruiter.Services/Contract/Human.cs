@@ -2,7 +2,7 @@
 
 namespace MutantRecruiter.Services.Contract
 {
-    public class HumanInfo
+    public class Human
     {
         public string[] DNA { get; set; }
         public bool IsMutant { get; set; }
