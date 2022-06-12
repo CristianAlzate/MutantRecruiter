@@ -31,6 +31,9 @@ namespace MutantRecruiter
         {
             services.AddControllers();
             services.AddSingleton<IMutantService, MutantService>();
+            services.AddSingleton<ICosmosDBService<Human>>(new CosmosDBService<Human>(Configuration.GetValue<string>("CosmosDBEndpoint"),
+                Configuration.GetValue<string>("CosmosDBKey"),
+                Configuration.GetValue<string>("CosmosDB")));
             services.AddSingleton<IQueueService<Human>>(new QueueService<Human>(Configuration.GetValue<string>("QueueConnectionString")
                                                         , Configuration.GetValue<string>("QueueName")));
             services.AddSwaggerGen(c =>

@@ -130,7 +130,7 @@ namespace MutantRecruiter.Services.Services
             return 0;
         }
 
-        private async void SaveHumanInfo(Human human)
+        private void SaveHumanInfo(Human human)
         {
             _queueService.QueueStack(human);
         }

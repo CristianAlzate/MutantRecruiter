@@ -20,8 +20,8 @@ namespace MutantRecruiter.Services.Services
         }
         public async void QueueStack(T messageObject)
         {
-            QueueClient queueClient = new QueueClient(_connectionString, _queueName);
-            string message = Encoding.UTF8.GetString(Encoding.Default.GetBytes(JsonConvert.SerializeObject(messageObject)));
+            QueueClient queueClient = new QueueClient(_connectionString, _queueName,new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64});
+            string message = JsonConvert.SerializeObject(messageObject);
             queueClient.SendMessage(message);
         }
     }
