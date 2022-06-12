@@ -14,11 +14,13 @@ namespace MutantRecruiter.Services.Services
     {
         private readonly IConfiguration _config;
         private readonly IQueueService<Human> _queueService;
+        private readonly ICosmosDBService<Human> _cosmosService;
         private string[,] _dnaChain;
-        public MutantService(IConfiguration config, IQueueService<Human> queueService)
+        public MutantService(IConfiguration config, IQueueService<Human> queueService, ICosmosDBService<Human> cosmosService)
         {
             _config = config;
             _queueService = queueService;
+            _cosmosService = cosmosService;
         }
 
         /// <summary>
@@ -133,6 +135,20 @@ namespace MutantRecruiter.Services.Services
         private void SaveHumanInfo(Human human)
         {
             _queueService.QueueStack(human);
+        }
+
+        /// <summary>
+        /// Get the mutants ratio
+        /// </summary>
+        /// <returns></returns>
+        public async Task<MutantStats> Stats()
+        {
+            var humans = await _cosmosService.GetAll();
+            MutantStats stats = new MutantStats();
+            stats.CountHumans = humans.Count();
+            stats.Mutants = humans.Where(x => x.IsMutant).ToList();
+            stats.CountMutantsDetected = stats.Mutants.Count();
+            return stats;
         }
     }
 }

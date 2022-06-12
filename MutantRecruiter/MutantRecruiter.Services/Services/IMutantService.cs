@@ -10,5 +10,7 @@ namespace MutantRecruiter.Services.Services
     public interface IMutantService
     {
         Task<bool> IsMutant(Human human);
+        Task<MutantStats> Stats();
+
     }
 }

@@ -16,12 +16,10 @@ namespace MutantRecruiter.Controllers
     public class MutantController : ControllerBase
     {
         private readonly IMutantService _service;
-        private readonly ICosmosDBService<Human> _cosmosDBService;
 
-        public MutantController(IMutantService service,ICosmosDBService<Human> cosmosDBService)
+        public MutantController(IMutantService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
-            _cosmosDBService = cosmosDBService ?? throw new ArgumentNullException(nameof(service));
         }
 
         [HttpPost]
@@ -43,16 +41,16 @@ namespace MutantRecruiter.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Stats")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Stats(Human human)
+        public async Task<IActionResult> Stats()
         {
             try
             {
-                var dna = await _cosmosDBService.GetByQuery(JsonConvert.SerializeObject(human.DNA));
-                return Ok();
+                var dna = await _service.Stats();
+                return Ok(dna);
             }
             catch
             {

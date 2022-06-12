@@ -23,8 +23,7 @@ namespace MutantRecruiter.Services.Services
 
         public async Task<List<T>> GetAll()
         {
-            QueryDefinition queryDefinition = new QueryDefinition(string.Format(new T().GetByQuery(), "SELECT * FROM c"));
-            FeedIterator<T> queryResultSetIterator = _container.GetItemQueryIterator<T>(queryDefinition);
+            FeedIterator<T> queryResultSetIterator = _container.GetItemQueryIterator<T>();
             List<T> objs = new List<T>();
 
             while (queryResultSetIterator.HasMoreResults)
