@@ -15,6 +15,7 @@ namespace MutantRecruiter.Services.Services
         private readonly IConfiguration _config;
         private readonly IQueueService<Human> _queueService;
         private readonly ICosmosDBService<Human> _cosmosService;
+        private string _regex;
         private string[,] _dnaChain;
         public MutantService(IConfiguration config, IQueueService<Human> queueService, ICosmosDBService<Human> cosmosService)
         {
@@ -23,6 +24,10 @@ namespace MutantRecruiter.Services.Services
             _cosmosService = cosmosService;
         }
 
+        public MutantService(string regex)
+        {
+            _regex = regex;
+        }
         /// <summary>
         /// Main method to evaluate the dna chain
         /// </summary>
@@ -47,10 +52,10 @@ namespace MutantRecruiter.Services.Services
         /// </summary>
         /// <param name="dna">DNA Chain</param>
         /// <returns>True: Correct dna chain, False: Incorrect dna chain</returns>
-        private bool IsValidDNA(string[] dna)
+        public bool IsValidDNA(string[] dna)
         {
-            string pattern = _config.GetValue<string>("RegexDNA");
-            if (dna.Length > 3)
+            string pattern = _config != null ? _config.GetValue<string>("RegexDNA") : _regex ;
+            if (dna != null && dna.Length  > 3)
             {
                 foreach (var item in dna)
                 {
@@ -68,7 +73,7 @@ namespace MutantRecruiter.Services.Services
         /// </summary>
         /// <param name="dna"></param>
         /// <returns>DNA chain in the matrix</returns>
-        private string[,] SeparateChain(string[] dna)
+        public string[,] SeparateChain(string[] dna)
         {
             string[,] dnaChain = new string[dna.Length, dna.Length];
             for (int i = 0; i < dna.Length; i++)
@@ -87,7 +92,7 @@ namespace MutantRecruiter.Services.Services
         /// Method to evaluate the DNA chain
         /// </summary>
         /// <returns>True: Is mutant, False: Not mutant</returns>
-        private async Task<bool> ValidateDNAMutant()
+        public async Task<bool> ValidateDNAMutant()
         {
             int countChain = 0;
             int n = _dnaChain.GetLength(0); // Size matrix's rows and columns;
@@ -119,7 +124,7 @@ namespace MutantRecruiter.Services.Services
         /// <param name="quantity">quantity of equal letters</param>
         /// <param name="letter">letter to evaluate</param>
         /// <returns></returns>
-        private async Task<int> validateMutantChain(int rowInit, int columnInit, int rowMove, int columnMove, int quantity, string letter)
+        public async Task<int> validateMutantChain(int rowInit, int columnInit, int rowMove, int columnMove, int quantity, string letter)
         {
             if (_dnaChain[rowInit + rowMove, columnInit + columnMove] == letter)
             {
@@ -132,7 +137,7 @@ namespace MutantRecruiter.Services.Services
             return 0;
         }
 
-        private void SaveHumanInfo(Human human)
+        public void SaveHumanInfo(Human human)
         {
             _queueService.QueueStack(human);
         }

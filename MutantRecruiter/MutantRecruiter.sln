@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MutantRecruiter.Web", "Muta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MutantRecruiter.Services", "MutantRecruiter.Services\MutantRecruiter.Services.csproj", "{B3870A98-FA45-4A1C-858C-782F4BE7965A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutantRecruiter.Functions", "MutantRecruiter.Functions\MutantRecruiter.Functions.csproj", "{428C442B-39AD-4204-83D0-901D00A23D22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MutantRecruiter.Functions", "MutantRecruiter.Functions\MutantRecruiter.Functions.csproj", "{428C442B-39AD-4204-83D0-901D00A23D22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutantRecruiter.Test", "MutantRecruiter.Test\MutantRecruiter.Test.csproj", "{C545956A-7D3A-49D3-9B04-1E86581D7CCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{428C442B-39AD-4204-83D0-901D00A23D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{428C442B-39AD-4204-83D0-901D00A23D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{428C442B-39AD-4204-83D0-901D00A23D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C545956A-7D3A-49D3-9B04-1E86581D7CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C545956A-7D3A-49D3-9B04-1E86581D7CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C545956A-7D3A-49D3-9B04-1E86581D7CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C545956A-7D3A-49D3-9B04-1E86581D7CCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
